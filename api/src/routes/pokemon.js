@@ -116,34 +116,32 @@ const getPokemonsName = async (name) => {
     console.log(error);
   }
 };
-
+/* 
 //QUERY API- DB
 const allQueryName = async (name) => {
     const apiDataQ = await getApiName(name)
     const dbDataQ = await getPokemonsName(name)
     const allQuery = dbDataQ.concat(apiDataQ);
     return allQuery;
-};
+}; */
 
 
 
   //RUTA POR QUERY
   router.get("/", async (req, res) => {
-    const { name } = req.query;
     try {
-        const totalPokemons = await allPokemons();
-        if (!name) {
-            return res.send(totalPokemons);
-        } else if (name) {
-            const pkAll = await allQueryName(name);
-            return res.send(pkAll);
-        } else {
-            return res.status(404).json({msg: "Pokemon Not Found"})
-        }
+      const { name } = req.query;
+      const totalPokemons = await allPokemons();
+      if (!name) return res.send(totalPokemons);
+      const apiN = await getApiName(name);
+      if (apiN) return res.send(apiN);
+      const dbN = await getPokemonsName(name);
+      if (dbN) return res.send(dbN);
+      return res.status(404).send({ msg: "Pokemon Not Found" });
     } catch (error) {
-        console.log(error);
+      console.log(error);
     }
-});
+  });
 
 
 // ID API
@@ -243,8 +241,8 @@ router.post("/", async (req, res) => {
       hp,
       img:
         img ||
-        "https://www.pngall.com/wp-content/uploads/4/Pokeball-Transparent.png",
-      // "https://gamegraduate.com/wp-content/uploads/2021/08/pokemon-1513925-removebg-preview.png",
+        "http://pngimg.com/uploads/pokemon_logo/pokemon_logo_PNG10.png",
+        //"https://www.pngall.com/wp-content/uploads/4/Pokeball-Transparent.png",
       attack,
       defense,
       speed,
