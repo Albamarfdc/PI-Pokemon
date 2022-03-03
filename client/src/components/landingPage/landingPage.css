@@ -1,0 +1,36 @@
+.landingPage {
+      background-image: url(../img/landing.jpg);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: 100vh;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+    
+    
+    .link {
+      text-decoration: none;
+    }
+    
+  .btnEnter{
+    border: none;
+    width: 4em;
+    height: 4em;
+    color:#d64262 ;
+    padding: 0.2em ;
+    margin-top: 28.5em;
+    margin-left: 1.7em;
+    font-size: 16px;
+    font-weight: 550;
+    border-radius: 100em;
+    background-color: white;
+    transition: background-color .3s;
+    cursor: pointer;
+  }
+  .btnEnter:hover{
+    margin-top: 28,5em;
+    color: #d64262;
+    border: 0.20rem solid rgb(214, 66, 98);
+  }

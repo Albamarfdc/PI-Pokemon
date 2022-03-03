@@ -1,0 +1,23 @@
+/* html body{
+   background: url('../img/Home.jpg') no-repeat center center fixed;
+  background-size: cover;
+  width: 100%;
+}
+.home {
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   margin-bottom: 2rem;
+ }
+ .cards {
+   display: grid;
+   grid-template-columns: repeat(4, 1fr);
+   grid-gap: 3rem;
+   padding-bottom: 2%;
+ }
+ .card {
+   padding-top: 1rem;
+   width: 15.5rem;
+   height: 19.5rem;
+   border-radius: 10px;
+ }  */
