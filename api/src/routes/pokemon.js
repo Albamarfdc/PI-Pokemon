@@ -242,7 +242,6 @@ router.post("/", async (req, res) => {
       img:
         img ||
         "http://pngimg.com/uploads/pokemon_logo/pokemon_logo_PNG10.png",
-        //"https://www.pngall.com/wp-content/uploads/4/Pokeball-Transparent.png",
       attack,
       defense,
       speed,
