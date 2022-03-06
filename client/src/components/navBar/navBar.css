@@ -12,19 +12,19 @@
 
 .search {
   font-size: 16px;
-  color: #ffffff;
-  margin: 0 auto;
+  color: rgb(33 89 124);
+  margin:  auto;
+  text-align: center;
 }
 
 .bar {
-  color: #faeaea;
-  background: rgba(18, 52, 60, 0.5);
-  box-shadow: 0px 0px 4px rgba(240, 204, 204, 0.25),
-    inset 0px 0px 20px 5px rgba(108, 96, 96, 0.81);
+  color:rgb(33 89 124);
+  background: rgb(255, 255, 255);
   border-radius: 2.5rem;
+  box-shadow: 0 0 0.25rem rgba(32, 188, 255, 0.774);
 }
 .bar::placeholder {
-  color: rgb(255, 255, 255);
+  color: rgb(33 89 124)
 }
 
 .home {

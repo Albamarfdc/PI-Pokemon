@@ -70,7 +70,7 @@ function Home() {
                     </Link>
                     <button className={'btnReload'} onClick={handleClick}>
                         {/* Recargar */}
-                        <img src={icon} alt='Reload' width='px' />
+                        <img src={icon} alt='Reload' width='50px' />
                     </button>
             </div>
             
@@ -93,7 +93,6 @@ function Home() {
                             <option value='Existing'>Existing</option>
                         </select>{' '}
               </div>
-              
                     {/* CARDS Y LOADER */}
                     {isLoading ? (
                         <img className={'loader'}

@@ -40,28 +40,28 @@ function Create() {
         input.name.length < 3
       ) {
         errors.name =
-          "This field cannot be empty. Special characters or numbers are not allowed";
+          "Special characters or numbers are not allowed";
       }
       if (pokemons.find((p) => p.name === input.name)) {
         errors.name = "This pokemon already exists!";
       }
       if (!input.hp || input.hp < 1) {
-        errors.hp = "Number required. Must be a number between 1-100";
+        errors.hp = "Must be a number between 1-100";
       }
       if (!input.attack || input.attack < 1) {
-        errors.attack = "Number required. Must be a number between 1-100";
+        errors.attack = "Must be a number between 1-100";
       }
       if (!input.defense || input.defense < 1) {
-        errors.defense = "Number required. Must be a number between 1-100";
+        errors.defense = "Must be a number between 1-100";
       }
       if (!input.speed || input.speed < 1) {
-        errors.speed = "Number required. Must be a number between 1-100";
+        errors.speed = "Must be a number between 1-100";
       }
       if (!input.height || input.height < 1) {
-        errors.height = "Number required. Must be a number between 1-20";
+        errors.height = "Must be a number between 1-20";
       }
       if (!input.weight || input.weight < 1) {
-        errors.weight = "Number required. Must be a number between 1-100";
+        errors.weight = "Must be a number between 1-100";
       }
       return errors;
     };
@@ -122,7 +122,8 @@ function Create() {
     };
   
     return (
-      <>
+      <div>
+
         <NavBar />
         {pokemons.length === 0 ? (
           <img
@@ -220,7 +221,7 @@ function Create() {
                     onChange={handleChange}
                     placeholder=" Height..."
                     className={'fields'}
-                  />
+                    />
                   {input.height}
                   <p>{errors.height}</p>
                   <label htmlFor="weight">Weight: </label>
@@ -249,8 +250,8 @@ function Create() {
                       </option>
                     );
                   })}
+                  <p>{errors.types}</p>
                 </select>
-                <p>{errors.types}</p>
                 {
                   input.types.map((e) => {
                     return (
@@ -275,7 +276,7 @@ function Create() {
             </form>
           </div>
         )}
-      </>
+        </div>
     );
   }
 export default Create;

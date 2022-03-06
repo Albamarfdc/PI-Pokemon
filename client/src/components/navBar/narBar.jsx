@@ -37,9 +37,9 @@ function NavBar() {
             </div>
             <div className={'searchDiv'}>
                 {/* Search Poke */}
-                <label className={'search'}> Search </label>
+                <label className={'search'}></label>
                 <form onSubmit={handleSubmit}>
-                    <input className={'bar'} type='text' placeholder="    Type a Pokemon here..."
+                    <input className={'bar'} type='text' placeholder="    Find your Pokemon..."
                         value={name} onChange={handleName}/>
                 </form>
             </div>

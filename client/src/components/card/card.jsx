@@ -14,7 +14,7 @@ function PokeCard({ name, types, img, id }) {
                 {types?.map((e) => (
                     <span  key={e}>
                     {' '}
-                    {e[0].toUpperCase() + e.slice(1)}
+                    {e[0].toUpperCase() + e.slice(1) }
                     </span>
                 ))}
             </Link>
