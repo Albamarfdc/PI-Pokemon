@@ -266,19 +266,14 @@ router.post("/", async (req, res) => {
 router.delete("/delete/:id", async (req, res) => {
   const { id } = req.params;
   try {
-    const pokes = await Pokemon.findAll({
-      where: {
-        id:id
-      }
-    })
-    if (pokes) {
-      Pokemon.destroy({
+    if (id) {
+      await Pokemon.destroy({
         where: { id: id },
       });
     }
-    return res.send({ msg: "Pokemon deleted" });
+    return res.send({ msg: 'Pokemon deleted' });
   } catch (error) {
-    console.log(error);
+    console.log(error)
   }
 });
 
