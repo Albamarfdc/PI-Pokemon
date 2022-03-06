@@ -1,15 +1,16 @@
 import React from "react";
 import { Link } from 'react-router-dom';
+import './card.css'
 
 
 function PokeCard({ name, types, img, id }) {
     return (
         <div>
+            <Link className={'cardDet'} to={'/detail/'+ id}>
+                <img src={img} alt='pokemon' width="70%" height="70%" />
+                <h3 className={"name"}>{name[0].toUpperCase() + name.slice(1)}</h3>
             <div>
-                <img src={img} alt='pokemon' width="40%" height="40%" />
-            </div>
-            <Link to={'/home' + id}>
-                <h3>{name[0].toUpperCase() + name.slice(1)}</h3>
+                </div>
                 {types?.map((e) => (
                     <span  key={e}>
                     {' '}

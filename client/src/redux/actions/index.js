@@ -93,13 +93,6 @@ export const getNames = (name) => {
     };
   }; 
   
-  export const cleanPokemons = () => {
-    return {
-      type: GET_POKEMONS,
-      payload: [],
-    };
-  };
-  
   export const cleanDetail = () => {
     return {
       type: GET_DETAILS,

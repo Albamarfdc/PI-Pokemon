@@ -1,0 +1,68 @@
+.detailCard {
+  text-transform: capitalize;
+  text-align: center;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.438) 0%,
+    rgba(0, 0, 0, 0.027) 100%
+  );
+  border: 1px solid rgb(0, 0, 0);
+  border-radius: 2rem;
+  margin: 3% auto;
+  padding-bottom: 1rem;
+  width: 25rem;
+  box-shadow: 0 0 1rem 0.5rem rgba(0, 0, 0, 0.432);
+  color: #ffffffd0;
+}
+
+.name {
+  margin-top: 2rem;
+  margin-left: 2rem;
+  margin-right: 2rem;
+  margin-bottom: 2rem;
+}
+
+.types {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.stat {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+
+  /* Añado mis propios estilos */
+  width: 8rem;
+  height: 0.55rem;
+  overflow: hidden;
+  border: solid 1px rgb(0, 0, 0);
+  border-radius: 20px;
+
+  /* width: 45x; */
+}
+
+.stat::-webkit-progress-bar {
+  background-color: rgba(166, 179, 255, 0.171);
+}
+
+.stat::-webkit-progress-value {
+  background-color: rgb(255, 0, 0);
+  box-shadow: 0 0 0.3rem rgb(0, 0, 0);
+  border-radius: 4rem;
+}
+
+.btnDelete {
+  margin-top: 4rem;
+  background: linear-gradient(
+    180deg,
+    rgba(244, 82, 71, 0.32) 18.57%,
+    rgba(107, 89, 25, 0.103) 100%
+  );
+  border-color: rgba(151, 90, 34, 0.589);
+  box-shadow: 0px 0px 20px 4px rgba(95, 20, 20, 0.5);
+  border-radius: 20px;
+  color: rgba(255, 235, 205, 0.616);
+  width: fit-content;
+  padding: 0.25rem 1rem;
+}

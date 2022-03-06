@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { filterByCreation, filterByType, getPokemons, getTypes, orderByName, orderByAttack, cleanPokemons} from '../../redux/actions';
+import { filterByCreation, filterByType, getPokemons, getTypes, orderByName, orderByAttack} from '../../redux/actions';
 import PokeCard from '../card/card';
 import Loader from '../img/Loader.gif';
 import icon from '../img/refresh.gif';
@@ -31,9 +31,6 @@ function Home() {
         useEffect(() => {
             dispatch(getPokemons());
             dispatch(getTypes())
-            return () => {
-                dispatch(cleanPokemons)
-            };
         }, [dispatch]);
 
 
@@ -73,7 +70,7 @@ function Home() {
                     </Link>
                     <button className={'btnReload'} onClick={handleClick}>
                         {/* Recargar */}
-                        <img src={icon} alt='Reload' width='100px' />
+                        <img src={icon} alt='Reload' width='px' />
                     </button>
             </div>
             
@@ -125,14 +122,13 @@ function Home() {
                             <option value='asc'>Order A-Z</option>
                             <option value='desc'>Order Z-A</option>
                         </select>
-                        <select className={'select'} onClick={handleAttack}>
+                        <select className={'selector'} onClick={handleAttack}>
                             <option value='All'>Orden By Attack</option>
                             <option value='min'>Attack Min</option>
                             <option value='max'>Attack Max</option>
                         </select>
                     </div>
                 </div>
-
             <Pagination
                 pokePerPage={pokePerPage}
                 pokemons={pokemons.length}

@@ -54,7 +54,7 @@ const initialState = {
         const filtType =
           action.payload === "All"
             ? allPokemonTypes
-            : allPokemonTypes.filter((e) => e.types.includes(action.payload));
+            : allPokemonTypes.filter((e) => e.types?.includes(action.payload));
   
         console.log("type", filtType);
         return {
@@ -112,4 +112,3 @@ const initialState = {
   };
   
   export default rootReducer;
-  

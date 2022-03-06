@@ -11,7 +11,7 @@ function Pagination({ pokePerPage, pokemons, pagination }) {
   }
 
   return (
-    <div>
+    <div className={'container'}>
       {pages?.map((e) => (
         <button className={'pagination'} key={e} onClick={() => pagination(e)}>
           {e}
