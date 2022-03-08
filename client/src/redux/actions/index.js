@@ -34,11 +34,9 @@ export const getNames = (name) => {
     return async (dispatch) => {
       try {
         const json = await axios(`http://localhost:3001/pokemons?name=${name}`);
-        // console.log("names act", json.data);
         return dispatch({ type: GET_NAMES, payload: json.data });
       } catch (error) {
         alert("Pokemon Not Found");
-        // console.log(error);
       }
     };
   };

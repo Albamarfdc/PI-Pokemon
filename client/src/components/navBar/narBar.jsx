@@ -16,14 +16,21 @@ function NavBar() {
     const handleName = (e) => {
         e.preventDefault();
         setName(e.target.value);
+        //console.log("HOLA",e.target.value)
     };
 
     const search = pokemons.find((e) => e.name === name);
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        search ? dispatch(getNames(name)) : navegate.push('/home');
-        setName('')
+        if (search) {
+            dispatch(getNames(name))
+        } else {
+            alert('Pokemon not Found')
+            navegate('/home')
+            setName('')
+        }
+        //console.log("CHAO", name)
     };
 
 
@@ -38,10 +45,15 @@ function NavBar() {
             <div className={'searchDiv'}>
                 {/* Search Poke */}
                 <label className={'search'}></label>
-                <form onSubmit={handleSubmit}>
-                    <input className={'bar'} type='text' placeholder="    Find your Pokemon..."
-                        value={name} onChange={handleName}/>
-                </form>
+        <form onSubmit={(e) =>handleSubmit(e)}>
+          <input
+            className={'bar'}
+            type="text"
+            placeholder="    Find your Pokemon here..."
+            value={name}
+            onChange={(e) => handleName(e)}
+          />
+        </form>
             </div>
             <div className={'home'}>
                  <Link to='/home'>

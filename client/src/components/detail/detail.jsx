@@ -25,7 +25,7 @@ const handleDelete = (e) => {
     e.preventDefault();
     const sure = window.confirm('Are you sure ?');
     if (sure) {
-      dispatch(deletePokemon(Detail.id));
+      dispatch(deletePokemon(detail.id));
       navigate('/home');
     }
   } 
@@ -86,7 +86,7 @@ const handleDelete = (e) => {
                   Height:{' '}
                   <progress
                     id='height'
-                    max='20'
+                    max='200'
                     value={detail.height}
                     className={'stat'}
                   /> {' '}

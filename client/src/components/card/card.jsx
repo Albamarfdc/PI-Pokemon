@@ -8,11 +8,11 @@ function PokeCard({ name, types, img, id }) {
         <div>
             <Link className={'cardDet'} to={'/detail/'+ id}>
                 <img src={img} alt='pokemon' width="70%" height="70%" />
-                <h3 className={"name"}>{name[0].toUpperCase() + name.slice(1)}</h3>
+                <h3 className={"name"}>{name}</h3>
             <div>
                 </div>
                 {types?.map((e) => (
-                    <span  key={e}>
+                    <span key={e}>
                     {' '}
                     {e[0].toUpperCase() + e.slice(1) }
                     </span>

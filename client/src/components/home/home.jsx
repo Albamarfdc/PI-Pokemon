@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -22,7 +23,7 @@ function Home() {
     const [pokePerPage, setPokePerPage] = useState(12)
     const indexLastPoke = currentPage * pokePerPage
     const indexFirstPoke = indexLastPoke - pokePerPage
-    const currentPokes = pokemons?.slice(indexFirstPoke, indexLastPoke)
+    const currentPokes = pokemons.slice(indexFirstPoke, indexLastPoke)
 
     const pagination = (page) => {
         setCurrentPage(page);
@@ -68,7 +69,7 @@ function Home() {
                     <Link to='/create' type='button' className={'btnCreate'}>
                         Create Pokemon
                     </Link>
-                    <button className={'btnReload'} onClick={handleClick}>
+                    <button className={'btnReload'} onClick={(e) => handleClick(e)}>
                         {/* Recargar */}
                         <img src={icon} alt='Reload' width='50px' />
                     </button>
@@ -77,7 +78,7 @@ function Home() {
                 {/* FILTROS  */}
                 <div className={'content'}>
                     <div className={'filters'}>
-                        <select className={'selector'} onClick={handleTypesFilter}>
+                        <select className={'selector'} onClick={(e) => handleTypesFilter(e)}>
                             <option value='All'>Types</option>
                             {types?.map((e) => {
                                 return (
@@ -87,7 +88,7 @@ function Home() {
                                 );
                             })}
                         </select>
-                        <select className={'selector'} onClick={handleCreationFilter}>
+                        <select className={'selector'} onClick={(e) => handleCreationFilter(e)}>
                             <option value='All'>Creation</option>
                             <option value='createdByUser'>By User</option>
                             <option value='Existing'>Existing</option>
@@ -103,25 +104,25 @@ function Home() {
                         />
                     ) : (
                         <div className={'cards'}>
-                            {currentPokes?.map((e) => (
-                                <div className={'card'} key={e.id}>
+                            {currentPokes?.map((p) => (
+                                <div className={'card'} key={p.id}>
                                     <PokeCard
-                                        name={e.name}
-                                        img={e.img}
-                                        types={e.types}
-                                        id={e.id}
+                                        name={p.name}
+                                        img={p.img}
+                                        types={p.types}
+                                        id={p.id}
                                     />
                                 </div>
                             ))}
                         </div>
-              )}
+                    )}
                <div className={'ordering'}>
-                        <select className={'selector'} onClick={handleOrder}>
+                        <select className={'selector'} onClick={(e) => handleOrder(e)}>
                             <option value='All'>Order By Name</option>
                             <option value='asc'>Order A-Z</option>
                             <option value='desc'>Order Z-A</option>
                         </select>
-                        <select className={'selector'} onClick={handleAttack}>
+                        <select className={'selector'} onClick={(e) => handleAttack(e)}>
                             <option value='All'>Orden By Attack</option>
                             <option value='min'>Attack Min</option>
                             <option value='max'>Attack Max</option>
@@ -131,10 +132,10 @@ function Home() {
             <Pagination
                 pokePerPage={pokePerPage}
                 pokemons={pokemons.length}
-                pagination={pagination}
+                    pagination={pagination}
             /> 
             </div>
-        );
+        )
     }
 
 

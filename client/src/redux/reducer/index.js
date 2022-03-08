@@ -12,8 +12,8 @@ import {
 } from "../actions";
 
 const initialState = {
-    allPokemons: [],
-    pokemons: [],
+  allPokemons: [],
+  pokemons: [],
     detail: [],
     types: [],
     isLoading: true,
@@ -29,9 +29,10 @@ const initialState = {
           isLoading: action.loading,
         };
       case GET_NAMES:
+        console.log('juth', action.payload)
         return {
           ...state,
-          pokemons: [action.payload],
+          pokemons: action.payload,
         };
       case GET_DETAILS:
         console.log("reducer id", action.payload);
