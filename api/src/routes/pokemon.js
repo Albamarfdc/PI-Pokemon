@@ -1,34 +1,39 @@
 const axios = require('axios');
 const express = require('express');
 const { Pokemon, Type } = require('../db')
-const url40 = `https://pokeapi.co/api/v2/pokemon?offset=0&limit=40`
+const url = 'hhttp://pokeapi.co/api/v2/pokemon'
 const urlQ = `http://pokeapi.co/api/v2/pokemon/`
 
 const router = express.Router();
 
 // TRAERME SOLO 40 POKES
 const getPokemonsApi = async () => {
-    try {
-        const pokes = [];
-        const { data } = await axios.get(url40)
-        for (let i = 0; i < data.results.length; i++) {
-            const poke = data.results[i].url
+  try {
+    const pokeApi = await axios.get(url);
+    const next = await axios.get(pokeApi.data.next);
+    const arr40 = pokeApi.data.results.concat(next.data.results).slice(0, 40);
+    const info40 = arr40.map(async (d) => await axios.get(d.url)); 
+    let poke40 = await Promise.all(info40).then((promise) => {
+      let pokeData = promise.map((e) => e.data);
+      let pokemons = pokeData.map((p) => ({
+        id: p.id,
+        name: p.name,
+        attack: p.stats[1].base_stat,
+        types: p.types.map((t) => t.type.name),
+        img: p.sprites.other.home.front_default,
+      }));
+      return pokemons;
+    });
+    return poke40;
+  } catch (error) {
+    console.log(error);
+  }
+};
 
-            const all = await axios.get(poke)
-            const allPokes = {
-                id: all.data.id,
-                name: all.data.name,
-                img: all.data.sprites.other.home.front_default,
-                attack: all.data.stats[1].base_stat,
-                types: all.data.types.map((e) => e.type.name),
-            };
-            pokes.push(allPokes)
-        };
-        return pokes;
-    } catch (error) {
-        console.log(error);
-    }
-}; 
+
+
+
+
 
 // POKE DB
 const getPokemonsDb = async () => {
@@ -47,7 +52,7 @@ const getPokemonsDb = async () => {
             id: e.id,
             name: e.name,
             attack: e.attack,
-            type: e.types.map((t) => t.name),
+            types: e.types.map((t) => t.name),
             img: e.img,
             createdByUser: e.createdByUser,
         }));
@@ -58,31 +63,18 @@ const getPokemonsDb = async () => {
 };
 
 
-//Unión de API, DB 
-const allPokemons = async () => {
-  try {
-    const apiP = await getPokemonsApi();
-    const dataB = await getPokemonsDb();
-    const pokeAll = apiP.concat(dataB);
-    return pokeAll;
-} catch (error) {
-    console.log(error);
-  }
-};
-
-
 //QUERY
 const getApiName = async (name) => {
   try {
     const apiName = await axios.get(`${urlQ}${name}`);
       const names =  await apiName.data
-          return {
+          return [{
                   id: names.id,
                   name: names.name,
                   types: names.types.map((t) => t.type.name),
                   img: names.sprites.other.home.front_default,
                   attack: names.stats[1].base_stat,
-        }
+        }]
   } catch (error) {
     console.log(error);
     }
@@ -105,7 +97,7 @@ const getPokemonsName = async (name) => {
       return {
         id: n.id,
         name: n.name,
-        type: n.types.map((t) => t.name),
+        types: n.types.map((t) => t.name),
         img: n.img,
         attack: n.attack,
         createdByUser: n.createdByUser,
@@ -116,33 +108,35 @@ const getPokemonsName = async (name) => {
     console.log(error);
   }
 };
-/* 
-//QUERY API- DB
-const allQueryName = async (name) => {
-    const apiDataQ = await getApiName(name)
-    const dbDataQ = await getPokemonsName(name)
-    const allQuery = dbDataQ.concat(apiDataQ);
-    return allQuery;
-}; */
-
 
 
   //RUTA POR QUERY
-  router.get("/", async (req, res) => {
-    try {
-      const { name } = req.query;
-      const totalPokemons = await allPokemons();
-      if (!name) return res.send(totalPokemons);
-      const apiN = await getApiName(name);
-      if (apiN) return res.send(apiN);
-      const dbN = await getPokemonsName(name);
-      if (dbN) return res.send(dbN);
-      return res.status(404).send({ msg: "Pokemon Not Found" });
-    } catch (error) {
-      console.log(error);
+router.get("/", async (req, res) => {
+  try {
+    const { name } = req.query;
+    if (name) {
+      const lowerName = name.toLocaleLowerCase();
+      const apiPokeQ = await getApiName(lowerName);
+      if (!apiPokeQ) {
+        const dbPokeQ = await getPokemonsName(lowerName);
+        if (!dbPokeQ) {
+          console.log(dbPokeQ);
+          res.status(404).json({ error: 'Pokemon not found' });
+        } else res.json(dbPokeQ);
+      } else res.json(apiPokeQ)
+    } else {
+      //union db -api
+      const apiP = await getPokemonsApi();
+      const dataB = await getPokemonsDb();
+      const pokeAll = apiP.concat(dataB);
+      if (dataB.length > 0) {
+        res.json(pokeAll);
+      } else res.json(apiP);
     }
-  });
-
+  }catch (error) {
+  console.log(error)
+}
+});
 
 // ID API
 const getIdApi = async (id) => {
