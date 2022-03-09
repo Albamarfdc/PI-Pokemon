@@ -43,15 +43,18 @@ function Home() {
         const handleTypesFilter = (e) => {
             dispatch(filterByType(e.target.value));
             setCurrentPage(1)
+            setOrder(`Orden: ${e.target.value}`);
         }
 
         const handleCreationFilter = (e) => {
             dispatch(filterByCreation(e.target.value));
+            setCurrentPage(1);
             setOrder(`Orden: ${e.target.value}`);
         };
 
         const handleOrder = (e) => {
             dispatch(orderByName(e.target.value));
+            setCurrentPage(1);
             setOrder(`Orden: ${e.target.value}`);
         };
 
@@ -74,7 +77,6 @@ function Home() {
                         <img src={icon} alt='Reload' width='50px' />
                     </button>
             </div>
-            
                 {/* FILTROS  */}
                 <div className={'content'}>
                     <div className={'filters'}>
@@ -90,10 +92,10 @@ function Home() {
                         </select>
                         <select className={'selector'} onClick={(e) => handleCreationFilter(e)}>
                             <option value='All'>Creation</option>
-                            <option value='createdByUser'>By User</option>
                             <option value='Existing'>Existing</option>
+                            <option value='createdByUser'>By User</option>
                         </select>{' '}
-              </div>
+                    </div>
                     {/* CARDS Y LOADER */}
                     {isLoading ? (
                         <img className={'loader'}
@@ -116,6 +118,7 @@ function Home() {
                             ))}
                         </div>
                     )}
+                    
                <div className={'ordering'}>
                         <select className={'selector'} onClick={(e) => handleOrder(e)}>
                             <option value='All'>Order By Name</option>
@@ -130,10 +133,10 @@ function Home() {
                     </div>
                 </div>
             <Pagination
-                pokePerPage={pokePerPage}
-                pokemons={pokemons.length}
+                    pokePerPage={pokePerPage}
+                    pokemons={pokemons.length}
                     pagination={pagination}
-            /> 
+                    /> 
             </div>
         )
     }

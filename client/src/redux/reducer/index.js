@@ -88,7 +88,7 @@ const initialState = {
           ...state,
           pokemons: orderNames,
         };
-      case ORDER_BY_ATTACK:
+      case ORDER_BY_ATTACK: 
         const orderAttack =
           action.payload === "All"
             ? state.allPokemons

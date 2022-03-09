@@ -25,10 +25,11 @@ function NavBar() {
         e.preventDefault();
         if (search) {
             dispatch(getNames(name))
+            setName('')
         } else {
             alert('Pokemon not Found')
-            navegate('/home')
             setName('')
+            navegate('/home')
         }
         //console.log("CHAO", name)
     };
