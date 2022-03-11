@@ -69,6 +69,7 @@ const initialState = {
           action.payload === "createdByUser"
             ? allPokemonCreations.filter((p) => p.createdByUser) //filtro por atributo de db
             : allPokemonCreations.filter((p) => !p.createdByUser);
+        console.log("SOY CREATION", filtCreation)
         return {
           ...state,
           pokemons: filtCreation,
@@ -83,7 +84,8 @@ const initialState = {
               })
             : state.pokemons.sort((a, b) => {
                 return b.name.toLowerCase().localeCompare(a.name.toLowerCase());
-              });
+            });
+        //console.log('SOY ORDER NAME',orderNames)
         return {
           ...state,
           pokemons: orderNames,
@@ -99,6 +101,7 @@ const initialState = {
             : state.pokemons.sort((a, b) => {
                 return a.attack - b.attack;
               });
+              console.log('SOY ATTACK', orderAttack)
         return {
           ...state,
           pokemons: orderAttack,

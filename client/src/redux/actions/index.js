@@ -16,7 +16,7 @@ export function getPokemons() {
     return async function (dispatch) {
         try {
             const url = await axios.get('http://localhost:3001/pokemons');
-            console.log('arepita', url)
+            //console.log('arepita', url)
             return dispatch({
                 type: GET_POKEMONS,
                 payload: url.data,

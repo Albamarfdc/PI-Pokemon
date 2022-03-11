@@ -10,8 +10,9 @@ import './create.css'
 function Create() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const {pokemons,types} = useSelector((state) => state);
+  const { pokemons ,types} = useSelector((state) => state);
   const [errors, setErrors] = useState({});
+
   
     useEffect(() => {
       dispatch(getTypes());
@@ -33,7 +34,7 @@ function Create() {
     const resetInput = () => {
       setInput({
         name: "",
-        image: "",
+        img: "",
         hp: "0",
         attack: "0",
         defense: "0",
@@ -55,8 +56,8 @@ function Create() {
         error.name = "Name can only contain letters.";
       else if (input.name.length < 4)
         error.name = "Name must have a minimum length of 4.";
-      else if (!validUrl.test(input.image) && input.image)
-        error.image = "Image field must have a valid URL or be empty.";
+      else if (!validUrl.test(input.img) && input.img)
+        error.img = "Image field must have a valid URL or be empty.";
       else if (
         !validNum.test(input.hp) ||
         parseInt(input.hp) < 5 ||
@@ -90,9 +91,10 @@ function Create() {
       else if (
         !validNum.test(input.weight) ||
         parseInt(input.weight) < 5 ||
-        parseInt(input.weight) > 10000
+        parseInt(input.weight) > 1000
       )
-        error.weight = "Weight must be a number between 5 and 10000."
+        error.weight = "Weight must be a number between 5 and 1000."
+        
       return error;
     };
 
@@ -103,12 +105,15 @@ function Create() {
       pokemons.some((e) => e.name.toLowerCase() === input.name.toLowerCase())
     ) {
       alert("That name already exists!");
-    } else if (!Object.keys(errors).length && input.name.length) {
+    } else if (!Object.keys(errors).length
+      && input.name.length
+      && input.types.length > 0
+      && input.types.length <= 2) {
       dispatch(addPokemon(input));
       resetInput();
       alert("Pokémon created succesfully!");
       navigate("/home");
-    } else alert("Please, check the form!");
+    } else alert("Please, check the form!")
   };
 
 
@@ -126,7 +131,7 @@ function Create() {
   };
 
   const handleSelect = (e) => {
-    if (input.types.length < 2) {
+    if (input.types.length < 2 ) {
       setInput({
         ...input,
         types: [...input.types, e.target.value],
@@ -137,11 +142,19 @@ function Create() {
     }
   };
 
-  const handleDelete = (e) => {
+  
+
+  const handleDelete = (type) => {
     setInput({
       ...input,
-      types: input.types.filter((t) => t !== e),
+      types: input.types.filter((e) => e !== type),
     });
+    setErrors(
+      validate({
+        ...input,
+        types: input.types.filter((e) => e !== type),
+      })
+    );
   };
 
     return (
@@ -178,12 +191,12 @@ function Create() {
                   className={'fields'}
                 />
                 <p>{errors.name}</p>
-                <label htmlFor="image">Image: </label>
+                <label htmlFor="img">Image: </label>
             <input
               type="text"
-              value={input.image}
-              name="image"
-              id="image"
+              value={input.img}
+              name="img"
+              id="img"
                       onChange={(e) => {
                         handleChange(e)
                       }}
