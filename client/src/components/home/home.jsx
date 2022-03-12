@@ -10,8 +10,8 @@ import {
   orderByAttack,
 } from "../../redux/actions";
 import PokeCard from "../card/card";
-import Loader from "../img/Loader.gif";
-import icon from "../img/refresh.gif";
+import Loader from "../assets/Loader.gif";
+import icon from "../assets/refresh.gif";
 import NavBar from "../navBar/narBar";
 import Pagination from "../pagination/pagination";
 import "./home.css";
@@ -21,19 +21,17 @@ function Home() {
   const pokemons = useSelector((state) => state.pokemons);
   const isLoading = useSelector((state) => state.isLoading);
   const types = useSelector((state) => state.types);
+  const [order, setOrder] = useState("");
+
 
   /* ---------------------Paginacion----------------- */
-  const [order, setOrder] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
+  const [page, setPage] = useState(1);
   const [pokePerPage, setPokePerPage] = useState(12);
-  const indexLastPoke = currentPage * pokePerPage;
-  const indexFirstPoke = indexLastPoke - pokePerPage;
-  const currentPokes = pokemons.slice(indexFirstPoke, indexLastPoke);
 
-  const pagination = (page) => {
-    setCurrentPage(page);
-    setPokePerPage(12)
-  };
+  const max = pokemons.length / pokePerPage;
+
+
+
 
   useEffect(() => {
     dispatch(getPokemons());
@@ -47,28 +45,31 @@ function Home() {
 
   const handleTypesFilter = (e) => {
     dispatch(filterByType(e.target.value));
-    setCurrentPage(1);
-    setOrder(`Orden: ${e.target.value}`);
+    setPage(1);
+    setOrder(order);
   };
 
   const handleCreationFilter = (e) => {
     dispatch(filterByCreation(e.target.value));
-    setCurrentPage(1);
+    setPage(1);
     setOrder(`Orden: ${e.target.value}`);
   };
 
   const handleOrder = (e) => {
     dispatch(orderByName(e.target.value));
-    setCurrentPage(1);
+    setPage(1);
     setOrder(`Orden: ${e.target.value}`);
   };
 
   const handleAttack = (e) => {
     dispatch(orderByAttack(e.target.value));
-    setCurrentPage(1);
+    setPage(1);
     setOrder(`Orden: ${e.target.value}`);
   };
 
+
+
+  
   return (
     <div className={"home"}>
       <NavBar />
@@ -82,6 +83,14 @@ function Home() {
           <img src={icon} alt="Reload" width="50px" />
         </button>
       </div>
+      <div>
+        <div>
+          <div>
+          <Pagination page={page} setPage={setPage} max={max}/>
+          </div>
+        </div>
+      </div>
+          
       {/* FILTROS  */}
       <div className={"content"}>
         <div className={"filters"}>
@@ -95,10 +104,7 @@ function Home() {
               );
             })}
           </select>
-          <select
-            className={"selector"}
-            onChange={handleCreationFilter}
-          >
+          <select className={"selector"} onChange={handleCreationFilter}>
             <option value="All">Creation</option>
             <option value="Existing">Existing</option>
             <option value="createdByUser">By User</option>
@@ -107,19 +113,29 @@ function Home() {
         {/* CARDS Y LOADER */}
         {isLoading ? (
           <img
-            className={"loader"}
-            src={Loader}
-            alt="Loading..."
-            width="400px"
-            height="400px"
+          className={"loader"}
+          src={Loader}
+          alt="Loading..."
+          width="400px"
+          height="400px"
           />
         ) : (
           <div className={"cards"}>
-            {currentPokes?.map((p) => (
-              <div className={"card"} key={p.id}>
-                <PokeCard name={p.name} img={p.img} types={p.types} id={p.id} />
-              </div>
-            ))}
+            {pokemons
+              .slice(
+                (page - 1) * pokePerPage,
+                (page - 1) * pokePerPage + pokePerPage
+              )
+              ?.map((p) => (
+                <div className={"card"} key={p.id}>
+                  <PokeCard
+                    name={p.name}
+                    img={p.img}
+                    types={p.types}
+                    id={p.id}
+                  />
+                </div>
+              ))}
           </div>
         )}
 
@@ -136,11 +152,6 @@ function Home() {
           </select>
         </div>
       </div>
-      <Pagination
-        pokePerPage={pokePerPage}
-        pokemons={pokemons.length}
-        pagination={pagination}
-      />
     </div>
   );
 }

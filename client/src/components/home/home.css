@@ -1,5 +1,5 @@
 html body{
-  background: url('../img/home.jpg') no-repeat center center fixed;
+  background: url('../assets/home.jpg') no-repeat center center fixed;
   background-size: cover;
   width: 100%;
 }
@@ -28,6 +28,7 @@ html body{
   font-family: Verdana, Tahoma, sans-serif;
   font-weight: bold;
   color: rgb(255, 255, 255);
+  margin-left: 2.5em;
   width: fit-content;
   padding: 0.75rem;
   text-transform: uppercase;

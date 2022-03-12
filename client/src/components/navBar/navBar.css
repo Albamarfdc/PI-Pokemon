@@ -2,6 +2,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-right: 10em;
   height: 7rem;
   text-shadow: 0 0 0.25rem rgba(32, 188, 255, 0.774);
 }
@@ -13,22 +14,21 @@
 .search {
   font-size: 16px;
   color: rgb(33 89 124);
-  margin:  auto;
+  margin: auto;
   text-align: center;
 }
 
 .bar {
-  color:rgb(33 89 124);
+  color: rgb(33 89 124);
   background: rgb(255, 255, 255);
   border-radius: 2.5rem;
   box-shadow: 0 0 0.25rem rgba(32, 188, 255, 0.774);
 }
 .bar::placeholder {
-  color: rgb(33 89 124)
+  color: rgb(33 89 124);
 }
 
 .home {
-  margin-right: 2rem;
+  margin-right: .5rem;
   margin-block-start: auto;
 }
-

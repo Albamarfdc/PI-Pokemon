@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { cleanDetail, deletePokemon, getPokemonId } from '../../redux/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import NavBar from '../navBar/narBar'
-import Loader from '../img/Loader2.gif'
+import Loader from '../assets/Loader2.gif'
 import './detail.css'
 
 

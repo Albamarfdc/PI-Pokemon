@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { addPokemon, getPokemons, getTypes } from '../../redux/actions';
 import NavBar from '../navBar/narBar';
-import Loader from "../img/Loader2.gif";
+import Loader from "../assets/Loader2.gif";
 import './create.css'
 
 
@@ -45,57 +45,44 @@ function Create() {
       });
     };
   
-    const validate = (input) => {
-      const error = {};
-      const validName = /^[a-zA-ZñÑ]+$/i;
-      const validNum = /^\d+$/;
-      const validUrl = /^(ftp|http|https):\/\/[^ "]+\.\S+$/;
-    
-      if (!input.name) error.name = "Name is required.";
-      else if (!validName.test(input.name))
-        error.name = "Name can only contain letters.";
-      else if (input.name.length < 4)
-        error.name = "Name must have a minimum length of 4.";
-      else if (!validUrl.test(input.img) && input.img)
-        error.img = "Image field must have a valid URL or be empty.";
-      else if (
-        !validNum.test(input.hp) ||
-        parseInt(input.hp) < 5 ||
-        parseInt(input.hp) > 255
-      )
-        error.hp = "HP must be a number between 5 and 255.";
-      else if (
-        !validNum.test(input.attack) ||
-        parseInt(input.attack) < 5 ||
-        parseInt(input.attack) > 190
-      )
-        error.attack = "Attack must be a number between 5 and 190.";
-      else if (
-        !validNum.test(input.defense) ||
-        parseInt(input.defense) < 5 ||
-        parseInt(input.defense) > 250
-      )
-        error.defense = "Defense must be a number between 5 and 250.";
-      else if (
-        !validNum.test(input.speed) ||
-        parseInt(input.speed) < 5 ||
-        parseInt(input.speed) > 200
-      )
-        error.speed = "Speed must be a number between 5 and 200.";
-      else if (
-        !validNum.test(input.height) ||
-        parseInt(input.height) < 5 ||
-        parseInt(input.height) > 1000
-      )
-        error.height = "Height must be a number between 5 and 1000.";
-      else if (
-        !validNum.test(input.weight) ||
-        parseInt(input.weight) < 5 ||
-        parseInt(input.weight) > 1000
-      )
-        error.weight = "Weight must be a number between 5 and 1000."
-        
-      return error;
+
+  let validateName = /^[a-zA-Z\s]+$/;
+  const validUrl = /^(ftp|http|https):\/\/[^ "]+\.\S+$/;
+  
+  const validate = (input) => {
+    let errors = {};
+    if (
+      !input.name ||
+      !validateName.test(input.name) ||
+      input.name.length < 3
+    ) {
+      errors.name =
+        "This field cannot be empty. Special characters or numbers are not allowed";
+    } if (!validUrl.test(input.img) && input.img) {
+      errors.img = "Image field must have a valid URL or be empty.";
+  }
+  if (pokemons.find((p) => p.name === input.name)) {
+        errors.name = "This pokemon already exists!";
+      }
+      if (!input.hp || input.hp < 1) {
+        errors.hp = "Number required. Must be a number between 1-255";
+      }
+      if (!input.attack || input.attack < 1) {
+        errors.attack = "Number required. Must be a number between 1-200";
+      }
+      if (!input.defense || input.defense < 1) {
+        errors.defense = "Number required. Must be a number between 1-250";
+      }
+      if (!input.speed || input.speed < 1) {
+        errors.speed = "Number required. Must be a number between 1-200";
+      }
+      if (!input.height || input.height < 1) {
+        errors.height = "Number required. Must be a number between 1-1000";
+      }
+      if (!input.weight || input.weight < 1) {
+        errors.weight = "Number required. Must be a number between 1-2000";
+      }
+      return errors;
     };
 
 
@@ -228,7 +215,7 @@ function Create() {
               name="attack"
               id="attack"
               min="0"
-              max="190"
+              max="200"
               step="1"
               onChange={(e) => {
                 handleChange(e)
@@ -300,7 +287,7 @@ function Create() {
               name="weight"
               id="weight"
               min="0"
-              max="1000"
+              max="2000"
               step="1"
               onChange={(e) => {
                 handleChange(e)

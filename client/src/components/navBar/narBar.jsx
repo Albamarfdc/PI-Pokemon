@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import {useNavigate } from 'react-router-dom';
 import { getNames } from '../../redux/actions';
 import { Link } from 'react-router-dom';
-import Logo from '../img/ash1.png'
-import Homepoke from '../img/Homeback1.png';
+import Logo from '../assets/ash1.png'
+import Homepoke from '../assets/Homeback1.png';
 import './navBar.css'
 
 function NavBar() {

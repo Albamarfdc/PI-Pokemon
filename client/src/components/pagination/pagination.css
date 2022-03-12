@@ -33,3 +33,20 @@
     transition: 0.8s; 
 }
 
+
+button[disabled]{
+    cursor: no-drop
+}
+
+.box{
+    height: 20px;
+    width: 20px;
+    border-radius: 6px;
+    text-align: center;
+  }
+
+  .number{
+      color: #fff;
+      margin-left: .5em;
+      
+  }
