@@ -1,19 +1,17 @@
-const axios = require('axios');
-const express = require('express');
-const { Pokemon, Type } = require('../db')
-const url = 'http://pokeapi.co/api/v2/pokemon'
-const urlQ = `http://pokeapi.co/api/v2/pokemon/`
+const axios = require("axios");
+const express = require("express");
+const { Pokemon, Type } = require("../db");
+const urlQ = `http://pokeapi.co/api/v2/pokemon/`;
 
 const router = express.Router();
 
 // TRAERME SOLO 40 POKES
 const getPokemonsApi = async () => {
   try {
-    const pokeApi = await axios.get(url);
+    const pokeApi = await axios.get(urlQ);
     const next = await axios.get(pokeApi.data.next);
-    const arr40 = pokeApi.data.results.concat(next.data.results).slice(0, 40);
-
-    const info40 = arr40.map(async (d) => await axios.get(d.url)); 
+    const arr40 = pokeApi.data.results.concat(next.data.results).slice(0, 40)
+    const info40 = arr40.map(async (d) => await axios.get(d.url));
     let poke40 = await Promise.all(info40).then((promise) => {
       let pokeData = promise.map((e) => e.data);
       let pokemons = pokeData.map((p) => ({
@@ -31,54 +29,73 @@ const getPokemonsApi = async () => {
   }
 };
 
+//MUYYY LENTO con el filtrado desde la API
+/* const getPokemonsApi = async () => {
+  try {
+      const pokes = [];
+      const { data } = await axios.get(url40) 
+      for (let i = 0; i < data.results.length; i++) {
+          const poke = data.results[i].url
 
-
-
-
+          const all = await axios.get(poke)
+          const allPokes = {
+              id: all.data.id,
+              name: all.data.name,
+              img: all.data.sprites.other.home.front_default,
+              attack: all.data.stats[1].base_stat,
+              types: all.data.types.map((e) => e.type.name),
+          };
+          pokes.push(allPokes)
+      };
+      return pokes;
+  } catch (error) {
+      console.log(error);
+  }
+};  */
 
 // POKE DB
 const getPokemonsDb = async () => {
-    try {
-        const pokeDb = await Pokemon.findAll({
-            //Busco todos los pokemon de los modelos
-            include: {
-                model: Type,
-                attributes: ["name"],
-                through: {
-                    attributes: [],
-                },
-            },
-        });
-        const findPoke = pokeDb.map((e) => ({
-            id: e.id,
-            name: e.name,
-            attack: e.attack,
-            types: e.types.map((t) => t.name),
-            img: e.img,
-            createdByUser: e.createdByUser,
-        }));
-        return findPoke;
-    } catch (error) {
-        console.log(error)
-    }
+  try {
+    const pokeDb = await Pokemon.findAll({
+      //Busco todos los pokemon de los modelos
+      include: {
+        model: Type,
+        attributes: ["name"],
+        through: {
+          attributes: [],
+        },
+      },
+    });
+    const findPoke = pokeDb.map((e) => ({
+      id: e.id,
+      name: e.name,
+      attack: e.attack,
+      types: e.types.map((t) => t.name),
+      img: e.img,
+      createdByUser: e.createdByUser,
+    }));
+    return findPoke;
+  } catch (error) {
+    console.log(error);
+  }
 };
-
 
 //QUERY
 const getApiName = async (name) => {
   try {
     const apiName = await axios.get(`${urlQ}${name}`);
-      const names =  await apiName.data
-          return [{
-                  id: names.id,
-                  name: names.name,
-                  types: names.types.map((t) => t.type.name),
-                  img: names.sprites.other.home.front_default,
-                  attack: names.stats[1].base_stat,
-        }]
+    const names = await apiName.data;
+    return [{
+        id: names.id,
+        name: names.name,
+        types: names.types.map((t) => t.type.name),
+        img: names.sprites.other.home.front_default,
+        attack: names.stats[1].base_stat,
+    },
+    ];
   } catch (error) {
     console.log(error);
-    }
+  }
 };
 
 //QUERY DB
@@ -110,8 +127,7 @@ const getPokemonsName = async (name) => {
   }
 };
 
-
-  //RUTA POR QUERY
+//RUTA POR QUERY
 router.get("/", async (req, res) => {
   try {
     const { name } = req.query;
@@ -122,9 +138,9 @@ router.get("/", async (req, res) => {
         const dbPokeQ = await getPokemonsName(lowerName);
         if (!dbPokeQ) {
           console.log(dbPokeQ);
-          res.status(404).json({ error: 'Pokemon not found' });
+          res.status(404).json({ error: "Pokemon not found" });
         } else res.json(dbPokeQ);
-      } else res.json(apiPokeQ)
+      } else res.json(apiPokeQ);
     } else {
       //union db -api
       const apiP = await getPokemonsApi();
@@ -134,9 +150,9 @@ router.get("/", async (req, res) => {
         res.json(pokeAll);
       } else res.json(apiP);
     }
-  }catch (error) {
-  console.log(error)
-}
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 // ID API
@@ -161,12 +177,12 @@ const getIdApi = async (id) => {
   }
 };
 
-
 //ID-DB
 const getIdDb = async (id) => {
   try {
     const findIdDb = await Pokemon.findByPk(id, {
-      include: Type,});
+      include: Type,
+    });
     return {
       id: findIdDb.id,
       hp: findIdDb.hp,
@@ -187,36 +203,35 @@ const getIdDb = async (id) => {
 
 // ID API DB
 const allPokeByID = async (id) => {
-    try {
-        if (id.includes('-')) {
-            const dbIdInfo = await getIdDb(id);
-            return dbIdInfo
-        } else {
-            const apiInfo = await getIdApi(id);
-            return apiInfo;
-        }
-    } catch (error) {
-        console.log(error);
+  try {
+    if (id.includes("-")) {
+      const dbIdInfo = await getIdDb(id);
+      return dbIdInfo;
+    } else {
+      const apiInfo = await getIdApi(id);
+      return apiInfo;
     }
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 //RUTA ID
 router.get("/:id", async (req, res) => {
-    try {
-      const { id } = req.params;
-        const fromApi = await allPokeByID(id);
-        if (fromApi) {
-            return res.send(fromApi);
-        } else {
-            return res.status(404).json({msg: "Poke Not Found"})
-        }
-  } catch (error) {
-      console.log(error);
+  try {
+    const { id } = req.params;
+    const fromApi = await allPokeByID(id);
+    if (fromApi) {
+      return res.send(fromApi);
+    } else {
+      return res.status(404).json({ msg: "Poke Not Found" });
     }
-  });
+  } catch (error) {
+    console.log(error);
+  }
+});
 
-
-  //POST
+//POST
 router.post("/", async (req, res) => {
   try {
     const {
@@ -235,8 +250,7 @@ router.post("/", async (req, res) => {
       name,
       hp,
       img:
-        img ||
-        "http://pngimg.com/uploads/pokemon_logo/pokemon_logo_PNG10.png",
+        img || "http://pngimg.com/uploads/pokemon_logo/pokemon_logo_PNG10.png",
       attack,
       defense,
       speed,
@@ -255,7 +269,6 @@ router.post("/", async (req, res) => {
   }
 });
 
-
 //DELETE
 router.delete("/delete/:id", async (req, res) => {
   const { id } = req.params;
@@ -265,9 +278,9 @@ router.delete("/delete/:id", async (req, res) => {
         where: { id: id },
       });
     }
-    return res.send({ msg: 'Pokemon deleted' });
+    return res.send({ msg: "Pokemon deleted" });
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
 });
 
