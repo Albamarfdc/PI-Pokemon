@@ -15,7 +15,7 @@ function NavBar() {
 
     const handleName = (e) => {
         e.preventDefault();
-        setName(e.target.value);
+        setName(e.target.value.toLowerCase());
         //console.log("HOLA",e.target.value)
     };
 

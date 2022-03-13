@@ -57,7 +57,7 @@ function Create() {
       input.name.length < 3
     ) {
       errors.name =
-        "This field cannot be empty. Special characters or numbers are not allowed";
+        "Special characters or numbers are not allowed";
     } if (!validUrl.test(input.img) && input.img) {
       errors.img = "Image field must have a valid URL or be empty.";
   }

@@ -27,7 +27,6 @@ function Home() {
   /* ---------------------Paginacion----------------- */
   const [page, setPage] = useState(1);
   const [pokePerPage, setPokePerPage] = useState(12);
-
   const max = pokemons.length / pokePerPage;
 
 
@@ -105,7 +104,7 @@ function Home() {
             })}
           </select>
           <select className={"selector"} onChange={handleCreationFilter}>
-            <option value="All">Creation</option>
+            <option value="All">Origen</option>
             <option value="Existing">Existing</option>
             <option value="createdByUser">By User</option>
           </select>{" "}
