@@ -10,7 +10,7 @@ const getPokemonsApi = async () => {
   try {
     const pokeApi = await axios.get(urlQ);
     const next = await axios.get(pokeApi.data.next);
-    const arr40 = pokeApi.data.results.concat(next.data.results).slice(0, 40)
+    const arr40 = pokeApi.data.results.concat(next.data.results).slice(0, 40);
     const info40 = arr40.map(async (d) => await axios.get(d.url));
     let poke40 = await Promise.all(info40).then((promise) => {
       let pokeData = promise.map((e) => e.data);
@@ -33,7 +33,7 @@ const getPokemonsApi = async () => {
 /* const getPokemonsApi = async () => {
   try {
       const pokes = [];
-      const { data } = await axios.get(url40) 
+      const { data } = await axios.get(url(link usando offset y limit api)) 
       for (let i = 0; i < data.results.length; i++) {
           const poke = data.results[i].url
 
@@ -80,18 +80,19 @@ const getPokemonsDb = async () => {
   }
 };
 
-//QUERY
+//QUERY `http://pokeapi.co/api/v2/pokemon/`
 const getApiName = async (name) => {
   try {
     const apiName = await axios.get(`${urlQ}${name}`);
     const names = await apiName.data;
-    return [{
+    return [
+      {
         id: names.id,
         name: names.name,
         types: names.types.map((t) => t.type.name),
         img: names.sprites.other.home.front_default,
         attack: names.stats[1].base_stat,
-    },
+      },
     ];
   } catch (error) {
     console.log(error);
@@ -155,10 +156,10 @@ router.get("/", async (req, res) => {
   }
 });
 
-// ID API
+// ID API `http://pokeapi.co/api/v2/pokemon/`
 const getIdApi = async (id) => {
   try {
-    const apiId = await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`);
+    const apiId = await axios.get(`${urlQ}${id}`);
     const IdDetails = apiId.data;
     return {
       id: IdDetails.id,
@@ -269,19 +270,8 @@ router.post("/", async (req, res) => {
   }
 });
 
-//DELETE
-router.delete("/delete/:id", async (req, res) => {
-  const { id } = req.params;
-  try {
-    if (id) {
-      await Pokemon.destroy({
-        where: { id: id },
-      });
-    }
-    return res.send({ msg: "Pokemon deleted" });
-  } catch (error) {
-    console.log(error);
-  }
-});
+
+
+
 
 module.exports = router;

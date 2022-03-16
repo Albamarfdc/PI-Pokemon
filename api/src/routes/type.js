@@ -3,6 +3,8 @@ const { Router } = require("express");
 const { Type } = require("../db");
 const url ="https://pokeapi.co/api/v2/type"
 
+
+
 const router = Router();
 
 const getTypesApi = async () => {
