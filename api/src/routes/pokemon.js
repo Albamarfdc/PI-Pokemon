@@ -18,8 +18,14 @@ const getPokemonsApi = async () => {
         id: p.id,
         name: p.name,
         attack: p.stats[1].base_stat,
+        hp: p.stats[0].base_stat,
+        defense: p.stats[2].base_stat,
+        speed: p.stats[5].base_stat,
+        height: p.height,
+        weight: p.weight,
         types: p.types.map((t) => t.type.name),
         img: p.sprites.other.home.front_default,
+        
       }));
       return pokemons;
     });
@@ -28,6 +34,8 @@ const getPokemonsApi = async () => {
     console.log(error);
   }
 };
+
+
 
 //MUYYY LENTO con el filtrado desde la API
 /* const getPokemonsApi = async () => {
@@ -89,15 +97,22 @@ const getApiName = async (name) => {
       {
         id: names.id,
         name: names.name,
+        attack: names.stats[1].base_stat,
+        height: names.height,
+        weight: names.weight,
         types: names.types.map((t) => t.type.name),
         img: names.sprites.other.home.front_default,
-        attack: names.stats[1].base_stat,
       },
     ];
   } catch (error) {
     console.log(error);
   }
 };
+
+
+
+
+
 
 //QUERY DB
 const getPokemonsName = async (name) => {
@@ -119,6 +134,8 @@ const getPokemonsName = async (name) => {
         types: n.types.map((t) => t.name),
         img: n.img,
         attack: n.attack,
+        height: n.height,
+        weight: n.weight,
         createdByUser: n.createdByUser,
       };
     });
@@ -155,6 +172,13 @@ router.get("/", async (req, res) => {
     console.log(error);
   }
 });
+
+
+
+
+
+
+
 
 // ID API `http://pokeapi.co/api/v2/pokemon/`
 const getIdApi = async (id) => {
