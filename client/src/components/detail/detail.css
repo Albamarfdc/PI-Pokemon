@@ -27,18 +27,24 @@
   justify-content: space-evenly;
 }
 
+.back {
+  margin-left: 3rem;
+  margin-top: 2rem;
+}
+
+.oader {
+  margin-top: 5rem;
+  margin-left: 30em;
+}
 .stat {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-
-
   width: 8rem;
   height: 0.55rem;
   overflow: hidden;
   border: solid 1px rgb(0, 0, 0);
   border-radius: 20px;
-
 }
 
 .stat::-webkit-progress-bar {
@@ -51,6 +57,9 @@
   border-radius: 4rem;
 }
 
+.loader {
+  margin: 0 auto;
+}
 .btnDelete {
   margin-top: 4rem;
   background: rgba(255, 255, 255, 0);
@@ -73,4 +82,3 @@
   transition: 0.8s;
   cursor: pointer;
 }
-

@@ -14,6 +14,7 @@ import Loader from "../assets/Loader.gif";
 import icon from "../assets/refresh.gif";
 import NavBar from "../navBar/narBar";
 import Pagination from "../pagination/pagination";
+import NotFound from "../assets/notFound.gif";
 import "./home.css";
 
 function Home() {
@@ -21,53 +22,60 @@ function Home() {
   const pokemons = useSelector((state) => state.pokemons);
   const isLoading = useSelector((state) => state.isLoading);
   const types = useSelector((state) => state.types);
-  const [order, setOrder] = useState("");
+  const [, setOrder] = useState("");
+
+
+
+/* const [order, setOrder] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pokePerPage, setPokePerPage] = useState(12);
+  const indexLastPoke = currentPage * pokePerPage;
+  const indexFirstPoke = indexLastPoke - pokePerPage;
+  const currentPokes = pokemons.slice(indexFirstPoke, indexLastPoke);
+
+  const pagination = (page) => {
+    setCurrentPage(page);
+    setPokePerPage(12)
+  }; */
+
 
 
   /* ---------------------Paginacion----------------- */
   const [page, setPage] = useState(1);
-  const [pokePerPage, setPokePerPage] = useState(12);
+  const [pokePerPage] = useState(12);
   const max = pokemons.length / pokePerPage;
-
-
-
 
   useEffect(() => {
     dispatch(getPokemons());
     dispatch(getTypes());
   }, [dispatch]);
 
-  const handleClick = (e) => {
+  function handleClick (e){
     e.preventDefault();
     dispatch(getPokemons());
   };
 
-  const handleTypesFilter = (e) => {
+  function handleTypesFilter(e){
     dispatch(filterByType(e.target.value));
     setPage(1);
-    setOrder(order);
   };
 
-  const handleCreationFilter = (e) => {
+  function handleCreationFilter(e) {
     dispatch(filterByCreation(e.target.value));
     setPage(1);
-    setOrder(`Orden: ${e.target.value}`);
   };
-
-  const handleOrder = (e) => {
+  
+  function handleOrder(e) {
     dispatch(orderByName(e.target.value));
     setPage(1);
     setOrder(`Orden: ${e.target.value}`);
   };
 
-  const handleAttack = (e) => {
+  function handleAttack(e) {
     dispatch(orderByAttack(e.target.value));
     setPage(1);
     setOrder(`Orden: ${e.target.value}`);
   };
-
-
-
   
   return (
     <div className={"home"}>
@@ -85,11 +93,10 @@ function Home() {
       <div>
         <div>
           <div>
-          <Pagination page={page} setPage={setPage} max={max}/>
+            <Pagination page={page} setPage={setPage} max={max} />
           </div>
         </div>
       </div>
-          
       {/* FILTROS  */}
       <div className={"content"}>
         <div className={"filters"}>
@@ -112,11 +119,19 @@ function Home() {
         {/* CARDS Y LOADER */}
         {isLoading ? (
           <img
-          className={"loader"}
-          src={Loader}
-          alt="Loading..."
-          width="400px"
-          height="400px"
+            className={"loader"}
+            src={Loader}
+            alt="Loading..."
+            width="400px"
+            height="400px"
+          />
+        ) : !pokemons.length ? (
+          <img
+            className={"notFound"}
+            src={NotFound}
+            alt="notFound"
+            width="400px"
+            height="400px"
           />
         ) : (
           <div className={"cards"}>

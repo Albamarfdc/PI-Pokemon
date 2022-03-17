@@ -1,6 +1,5 @@
 import React, { useState} from 'react';
-import { useDispatch, useSelector } from 'react-redux'
-import {useNavigate } from 'react-router-dom';
+import { useDispatch,} from 'react-redux'
 import { getNames } from '../../redux/actions';
 import { Link } from 'react-router-dom';
 import Logo from '../assets/ash1.png'
@@ -9,9 +8,7 @@ import './navBar.css'
 
 function NavBar() {
     const dispatch = useDispatch();
-    const navegate = useNavigate();
     const [name, setName] = useState('');
-    const pokemons = useSelector((state) => state.pokemons);
 
     const handleName = (e) => {
         e.preventDefault();
@@ -19,17 +16,12 @@ function NavBar() {
         //console.log("HOLA",e.target.value)
     };
 
-    const search = pokemons.find((e) => e.name === name);
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (search) {
+        if (name ) {
             dispatch(getNames(name))
             setName('')
-        } else {
-            alert('Pokemon not Found')
-            setName('')
-            navegate('/home')
         }
         //console.log("CHAO", name)
     };
@@ -45,7 +37,7 @@ function NavBar() {
             </div>
             <div className={'searchDiv'}>
                 {/* Search Poke */}
-                <label className={'search'}></label>
+            <label className={'search'}></label>
         <form onSubmit={(e) =>handleSubmit(e)}>
           <input
             className={'bar'}
