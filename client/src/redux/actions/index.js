@@ -10,10 +10,15 @@ export const ORDER_BY_NAME = "ORDER_BY_NAME";
 export const ORDER_BY_ATTACK = "ORDER_BY_ATTACK";
 export const DELETE_POKEMON = "DELETE_POKEMON"
 
+
+const BACK_URL ="https://app--pokemon.herokuapp.com/"
+
+
+
 export function getPokemons() {
   return async function (dispatch) {
     try {
-      const url = await axios.get("http://localhost:3001/pokemons");
+      const url = await axios.get(`${BACK_URL}/pokemons`);
       //console.log('arepita', url)
       return dispatch({
         type: GET_POKEMONS,
@@ -27,11 +32,12 @@ export function getPokemons() {
   };
 }
 
+
 export const getNames = (name) => {
   return async (dispatch) => {
     try {
       const json = await axios.get(
-        `http://localhost:3001/pokemons?name=${name}`
+        `${BACK_URL}/pokemons?name=${name}`
       );
       return dispatch({
         type: GET_NAMES,
@@ -43,10 +49,11 @@ export const getNames = (name) => {
   };
 };
 
+
 export const getPokemonId = (id) => {
   return async (dispatch) => {
     try {
-      const json = await axios.get(`http://localhost:3001/pokemons/${id}`);
+      const json = await axios.get(`${BACK_URL}/pokemons/${id}`);
       console.log("action id", json.data);
       return dispatch({ type: GET_DETAILS, payload: json.data });
     } catch (error) {
@@ -55,23 +62,24 @@ export const getPokemonId = (id) => {
   };
 };
 
+
 export const getTypes = () => {
   return async (dispatch) => {
     try {
-      const json = await axios.get("http://localhost:3001/types");
+      const json = await axios.get(`${BACK_URL}/types`);
       return dispatch({ type: GET_TYPES, payload: json.data });
     } catch (error) {
       console.log(error);
     }
   };
 };
+
+
+
 export const addPokemon = (payload) => {
   return async (dispatch) => {
     try {
-      const response = await axios.post(
-        "http://localhost:3001/pokemons",
-        payload
-      );
+      const response = await axios.post(`${BACK_URL}/pokemons`, payload)
       return dispatch({ type: POST_POKEMONS, payload: response });
     } catch (error) {
       console.log(error);
@@ -79,10 +87,12 @@ export const addPokemon = (payload) => {
   };
 };
 
+
+
 export const deletePokemon = (id) => {
   return async (dispatch)=> {
     try {
-      const poke = await axios.delete(`http://localhost:3001/pokemons/delete/${id}`)
+      const poke = await axios.delete(`${BACK_URL}/pokemons/delete/${id}`)
       return dispatch({
         type: DELETE_POKEMON,
         payload:poke.data
@@ -92,7 +102,6 @@ export const deletePokemon = (id) => {
     }
   };
 }; 
-
 
 
 
