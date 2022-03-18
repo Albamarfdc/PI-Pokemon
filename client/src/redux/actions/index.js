@@ -8,12 +8,9 @@ export const FILTER_TYPES = "FILTER_TYPES";
 export const FILTER_CREATION = "FILTER_CREATION";
 export const ORDER_BY_NAME = "ORDER_BY_NAME";
 export const ORDER_BY_ATTACK = "ORDER_BY_ATTACK";
-export const DELETE_POKEMON = "DELETE_POKEMON"
+export const DELETE_POKEMON = "DELETE_POKEMON";
 
-
-const BACK_URL ="https://app--pokemon.herokuapp.com/"
-
-
+const BACK_URL = "https://app--pokemon.herokuapp.com";
 
 export function getPokemons() {
   return async function (dispatch) {
@@ -32,13 +29,10 @@ export function getPokemons() {
   };
 }
 
-
 export const getNames = (name) => {
   return async (dispatch) => {
     try {
-      const json = await axios.get(
-        `${BACK_URL}/pokemons?name=${name}`
-      );
+      const json = await axios.get(`${BACK_URL}/pokemons?name=${name}`);
       return dispatch({
         type: GET_NAMES,
         payload: json.data,
@@ -48,7 +42,6 @@ export const getNames = (name) => {
     }
   };
 };
-
 
 export const getPokemonId = (id) => {
   return async (dispatch) => {
@@ -62,7 +55,6 @@ export const getPokemonId = (id) => {
   };
 };
 
-
 export const getTypes = () => {
   return async (dispatch) => {
     try {
@@ -74,12 +66,10 @@ export const getTypes = () => {
   };
 };
 
-
-
 export const addPokemon = (payload) => {
   return async (dispatch) => {
     try {
-      const response = await axios.post(`${BACK_URL}/pokemons`, payload)
+      const response = await axios.post(`${BACK_URL}/pokemons`, payload);
       return dispatch({ type: POST_POKEMONS, payload: response });
     } catch (error) {
       console.log(error);
@@ -87,23 +77,19 @@ export const addPokemon = (payload) => {
   };
 };
 
-
-
 export const deletePokemon = (id) => {
-  return async (dispatch)=> {
+  return async (dispatch) => {
     try {
-      const poke = await axios.delete(`${BACK_URL}/pokemons/delete/${id}`)
+      const poke = await axios.delete(`${BACK_URL}/pokemons/delete/${id}`);
       return dispatch({
         type: DELETE_POKEMON,
-        payload:poke.data
+        payload: poke.data,
       });
     } catch (error) {
       console.log(error);
     }
   };
-}; 
-
-
+};
 
 export const cleanDetail = () => {
   return {
