@@ -8,6 +8,7 @@ export const FILTER_TYPES = "FILTER_TYPES";
 export const FILTER_CREATION = "FILTER_CREATION";
 export const ORDER_BY_NAME = "ORDER_BY_NAME";
 export const ORDER_BY_ATTACK = "ORDER_BY_ATTACK";
+export const DELETE_POKEMON = "DELETE_POKEMON"
 
 export function getPokemons() {
   return async function (dispatch) {
@@ -77,6 +78,20 @@ export const addPokemon = (payload) => {
     }
   };
 };
+
+export const deletePokemon = (id) => {
+  return async (dispatch)=> {
+    try {
+      const poke = await axios.delete(`http://localhost:3001/pokemons/delete/${id}`)
+      return dispatch({
+        type: DELETE_POKEMON,
+        payload:poke.data
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}; 
 
 
 

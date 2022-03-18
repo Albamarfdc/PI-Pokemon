@@ -34,3 +34,9 @@
     color: #ff0000;
     border: 0.20rem solid rgb(0, 0, 0);
   }
+
+
+  @media screen and (min-width: 500px) {
+    
+
+  }

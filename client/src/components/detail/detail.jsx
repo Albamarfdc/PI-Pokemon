@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { cleanDetail, getPokemonId } from "../../redux/actions";
+import { useNavigate, useParams } from "react-router-dom";
+import { cleanDetail, getPokemonId,deletePokemon } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import Loading from "../assets/Loader2.gif";
 import { Link } from "react-router-dom";
@@ -10,6 +10,7 @@ import "./detail.css";
 function Detail() {
   const { id } = useParams();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const detail = useSelector((state) => state.detail);
 
   useEffect(() => {
@@ -18,6 +19,15 @@ function Detail() {
       dispatch(cleanDetail());
     };
   }, [id, dispatch]);
+
+  const handleDelete = (e) => {
+    e.preventDefault();
+    const sure = window.confirm('Are you sure ?');
+    if (sure) {
+      dispatch(deletePokemon(detail.id));
+      navigate('/home');
+    }
+  } 
 
   return (
     <>
@@ -102,6 +112,11 @@ function Detail() {
             <img src={Loading} alt="loader" width="400px" />
           </div>
         )}
+        {detail.createdByUser && (
+                <button className={'btnDelete'} onClick={e =>handleDelete(e)}>
+                  Delete
+                </button>
+            )}
       </div>
     </>
   );

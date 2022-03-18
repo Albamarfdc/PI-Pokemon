@@ -8,6 +8,7 @@ import {
   FILTER_CREATION,
   ORDER_BY_NAME,
   ORDER_BY_ATTACK,
+  DELETE_POKEMON
 } from "../actions";
 
 const initialState = {
@@ -95,10 +96,10 @@ const rootReducer = (state = initialState, action) => {
         action.payload === "All"
           ? state.allPokemons
           : action.payload === "max"
-          ? state.pokemons.sort((a, b) => {
+            ? state.pokemons.sort((a, b) => {
               return b.attack - a.attack;
             })
-          : state.pokemons.sort((a, b) => {
+            : state.pokemons.sort((a, b) => {
               return a.attack - b.attack;
             });
       //console.log('SOY ATTACK', orderAttack)
@@ -106,6 +107,10 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         pokemons: orderAttack,
       };
+    case DELETE_POKEMON:
+      return {
+        ...state,
+      }
     default:
       return { ...state };
   }

@@ -24,22 +24,6 @@ function Home() {
   const types = useSelector((state) => state.types);
   const [, setOrder] = useState("");
 
-
-
-/* const [order, setOrder] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
-  const [pokePerPage, setPokePerPage] = useState(12);
-  const indexLastPoke = currentPage * pokePerPage;
-  const indexFirstPoke = indexLastPoke - pokePerPage;
-  const currentPokes = pokemons.slice(indexFirstPoke, indexLastPoke);
-
-  const pagination = (page) => {
-    setCurrentPage(page);
-    setPokePerPage(12)
-  }; */
-
-
-
   /* ---------------------Paginacion----------------- */
   const [page, setPage] = useState(1);
   const [pokePerPage] = useState(12);
@@ -50,33 +34,33 @@ function Home() {
     dispatch(getTypes());
   }, [dispatch]);
 
-  function handleClick (e){
+  function handleClick(e) {
     e.preventDefault();
     dispatch(getPokemons());
-  };
+  }
 
-  function handleTypesFilter(e){
+  function handleTypesFilter(e) {
     dispatch(filterByType(e.target.value));
     setPage(1);
-  };
+  }
 
   function handleCreationFilter(e) {
     dispatch(filterByCreation(e.target.value));
     setPage(1);
-  };
-  
+  }
+
   function handleOrder(e) {
     dispatch(orderByName(e.target.value));
     setPage(1);
     setOrder(`Orden: ${e.target.value}`);
-  };
+  }
 
   function handleAttack(e) {
     dispatch(orderByAttack(e.target.value));
     setPage(1);
     setOrder(`Orden: ${e.target.value}`);
-  };
-  
+  }
+
   return (
     <div className={"home"}>
       <NavBar />
