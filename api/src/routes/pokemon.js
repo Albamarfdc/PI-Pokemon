@@ -37,30 +37,6 @@ const getPokemonsApi = async () => {
 
 
 
-//MUYYY LENTO con el filtrado desde la API
-/* const getPokemonsApi = async () => {
-  try {
-      const pokes = [];
-      const { data } = await axios.get(url(link usando offset y limit api)) 
-      for (let i = 0; i < data.results.length; i++) {
-          const poke = data.results[i].url
-
-          const all = await axios.get(poke)
-          const allPokes = {
-              id: all.data.id,
-              name: all.data.name,
-              img: all.data.sprites.other.home.front_default,
-              attack: all.data.stats[1].base_stat,
-              types: all.data.types.map((e) => e.type.name),
-          };
-          pokes.push(allPokes)
-      };
-      return pokes;
-  } catch (error) {
-      console.log(error);
-  }
-};  */
-
 // POKE DB
 const getPokemonsDb = async () => {
   try {
@@ -202,6 +178,11 @@ const getIdApi = async (id) => {
   }
 };
 
+
+
+
+
+
 //ID-DB
 const getIdDb = async (id) => {
   try {
@@ -293,6 +274,24 @@ router.post("/", async (req, res) => {
     console.log(error);
   }
 });
+
+router.delete("/delete/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    if (id) {
+      await Pokemon.destroy({
+        where: { id: id },
+      });
+    }
+    return res.send({ msg: "Pokemon deleted" });
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+
+
+
 
 
 
