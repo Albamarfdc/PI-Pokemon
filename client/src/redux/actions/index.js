@@ -10,7 +10,7 @@ export const ORDER_BY_NAME = "ORDER_BY_NAME";
 export const ORDER_BY_ATTACK = "ORDER_BY_ATTACK";
 export const DELETE_POKEMON = "DELETE_POKEMON";
 
-const BACK_URL = "https://app--pokemon.herokuapp.com";
+const BACK_URL = "http://localhost:8080";
 
 export function getPokemons() {
   return async function (dispatch) {

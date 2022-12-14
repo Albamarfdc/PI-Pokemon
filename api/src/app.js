@@ -3,7 +3,8 @@ const cookieParser = require("cookie-parser");
 //const bodyParser = require('body-parser');
 const morgan = require("morgan");
 const routes = require("./routes/index.js");
-const { CORS_URL } = process.env;
+const port = process.env.PORT || "8080"
+
 
 require("./db.js");
 
@@ -16,7 +17,7 @@ server.use(express.json({ limit: "50mb" }));
 server.use(cookieParser());
 server.use(morgan("dev"));
 server.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", CORS_URL); // update to match the domain you will make the request from
+  res.header("Access-Control-Allow-Origin", `${port}`); // update to match the domain you will make the request from
   res.header("Access-Control-Allow-Credentials", "true");
   res.header(
     "Access-Control-Allow-Headers",

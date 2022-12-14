@@ -5,6 +5,7 @@ const urlQ = `http://pokeapi.co/api/v2/pokemon/`;
 
 const router = express.Router();
 
+
 // TRAERME SOLO 40 POKES
 const getPokemonsApi = async () => {
   try {
