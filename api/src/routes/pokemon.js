@@ -11,7 +11,7 @@ const getPokemonsApi = async () => {
   try {
     const pokeApi = await axios.get(urlQ);
     const next = await axios.get(pokeApi.data.next);
-    const arr40 = pokeApi.data.results.concat(next.data.results).slice(0, 40);
+    const arr40 = pokeApi.data.results.concat(next.data.results).slice(0, 100);
     const info40 = arr40.map(async (d) => await axios.get(d.url));
     let poke40 = await Promise.all(info40).then((promise) => {
       let pokeData = promise.map((e) => e.data);
