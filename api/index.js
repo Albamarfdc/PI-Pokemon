@@ -21,15 +21,8 @@ const server = require('./src/app.js');
 const { conn } = require('./src/db.js');
 
 // Syncing all the models at once.
-const start = async () => {
-  try {
-    await conn.sync({ force: false });
-    server.listen(8080, () => {
-      console.log('🚀listening at 8080'); // eslint-disable-line no-console
-    });
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-start();
+conn.sync({ force: false }).then(() => {
+  server.listen(3001, () => {
+    console.log('%s listening at 3001'); // eslint-disable-line no-console
+  });
+});
