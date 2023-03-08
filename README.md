@@ -1,6 +1,6 @@
 
 
-# Individual Project - Henry Pokemon
+# Project Pokemon
 
 <p align="left">
   <img height="150" src="./pokemon.png" />
